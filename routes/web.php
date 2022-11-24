@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\PrinterController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get("/logout", [AuthController::class, "logout"])->middleware("guest")->name("logout");
+Route::middleware("auth")->group(function () {
+
+    Route::get('/', [PrinterController::class, 'index'])->name("home");
+    Route::post('/', [PrinterController::class, 'create'])->name("printer.create");
+    Route::delete("/{printer}", [PrinterController::class, "delete"]);
 });
+Route::get("/login", [AuthController::class, "index"])->name("login");
+Route::post("/login", [AuthController::class, "login"])
+    ->name("login.process");
