@@ -19,35 +19,22 @@
                     @csrf
                     <div class="mb-3">
                         <input type="text" class="form-control @error('nama') is-invalid @enderror" placeholder="Nama Siswa" name="nama" value="{{@old('nama')}}">
-<div class="invalid-feedback">@error('nama'){{$message}}@enderror</div>
+                        <div class="invalid-feedback">@error('nama'){{$message}}@enderror</div>
                     </div>
                     <select class="form-select mb-3" name="kelas">
                         <!--Kelas Sepuluh-->
-                        <option value="XA" selected>XA</option>
-                        <option value="XB">XB</option>
-                        <option value="XTB">XTB</option>
-                        <!--Kelas Sebelas-->
-                        <option value="XIA">XIA</option>
-                        <option value="XIB">XIB</option>
-                        <option value="XITB">XITB</option>
-                        <!--Kelas Duabelas-->
-                        <option value="XIIA">XIA</option>
-                        <option value="XIIB">XIB</option>
-                        <option value="XIITB">XITB</option>
-
-                        <option value="Guru">Guru</option>
-                        <option value="Staff">Staff</option>
-                        <option value="Lainnya">Lainnya</option>
-
+                        @foreach($kelas as $k)
+                        <option value="{{ $k->nama_kelas }}">{{ $k->nama_kelas}}</option>
+                        @endforeach
                     </select>
 
                     <div class="mb-3">
                         <input type="number" class="form-control  @error('biaya') is-invalid @enderror " placeholder="Biaya" name="biaya" value="{{@old('biaya')}}">
-<div class="invalid-feedback">@error('biaya'){{$message}}@enderror</div>
+                        <div class="invalid-feedback">@error('biaya'){{$message}}@enderror</div>
                     </div>
                     <div class="mb-3">
                         <input type="text" class="form-control @error('deskripsi') is-invalid @enderror" placeholder="Deskripsi" name="deskripsi" value="{{@old('deskripsi')}}">
-<div class="invalid-feedback">@error('deskripsi'){{$message}}@enderror</div>
+                        <div class="invalid-feedback">@error('deskripsi'){{$message}}@enderror</div>
                     </div>
                     <div class="mb-3">
                         <input type="submit" class="form-control btn btn-success" value="Tambahkan">
@@ -116,10 +103,12 @@
                 </td>
                 <td>
                     <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $printer->id}}">hapus</button>
+<a href="/edit/{{$printer->id}}" class="btn btn-sm btn-warning">Edit</a>
+
                 </td>
             </tr>
-            
-            
+
+
             @endforeach
         </tbody>
     </table>
@@ -143,9 +132,9 @@
                 url: "https://cdn.datatables.net/plug-ins/1.13.1/i18n/id.json"
             }
         });
-    @if($errors->any())
-    createModal.show()
-    @endif
+        @if($errors->any())
+        createModal.show()
+        @endif
     });
     $(".btn-delete").click((e) => {
         const id = $(e.target).data("id")
