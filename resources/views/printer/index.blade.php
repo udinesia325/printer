@@ -103,8 +103,8 @@
                 </td>
                 <td>
 @can("edit_delete",$printer)
-                    <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $printer->id}}">hapus</button>
-<a href="/edit/{{$printer->id}}" class="btn btn-sm btn-warning">Edit</a>
+                    <button class="btn btn-sm btn-danger btn-delete mb-2" ><i class="fa-solid fa-trash-can" data-id="{{ $printer->id}}"  ></i></button>
+<a href="/edit/{{$printer->id}}" class="btn btn-sm btn-warning text-white"><i class="fa-solid fa-file-pen"></i></a>
 @else
     -
 @endcan

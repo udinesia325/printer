@@ -27,6 +27,10 @@ Route::middleware("auth")->group(function () {
     // only admin
     Route::get("/register", [AuthController::class, "register"])->name("register")->can("admin_only");
     Route::post("/register", [AuthController::class, "registerProcess"])->name("register.process");
+
+    //rekapan data
+    Route::get("rekapan", [PrinterController::class, "rekapan"])->name("rekapan");
+    Route::post("rekapan", [PrinterController::class, "exportExcel"])->name("rekapan.excel");
 });
 Route::get("/login", [AuthController::class, "index"])->name("login");
 Route::post("/login", [AuthController::class, "login"])

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RekapBulananExport;
 use App\Http\Requests\PrinterRequest;
 use App\Models\Kelas;
 use App\Models\Printer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 
 class PrinterController extends Controller
@@ -53,5 +55,22 @@ class PrinterController extends Controller
         Gate::authorize("edit_delete", $printer);
         $printer->update($request->input());
         return redirect()->to(route("home"))->with("sukses", "Berhasil di Perbarui");
+    }
+    public function rekapan(Request $request)
+    {
+        // ambil tahun dan bulan
+        $bulan =  $request->query("bulan") ?? now()->month;
+        $tahun =  $request->query("tahun") ?? now()->year;
+        $printers =  Printer::whereMonth('created_at', $bulan)
+            ->whereYear('created_at', $tahun)
+            ->get();
+        return view("printer.rekapan", compact("printers"));
+    }
+    public function exportExcel(Request $request)
+    {
+
+        $bulan =  $request->input("bulan") ?? now()->month;
+        $tahun =  $request->input("tahun") ?? now()->year;
+        return  Excel::download(new RekapBulananExport($bulan, $tahun), "Rekapan.xlsx");
     }
 }
