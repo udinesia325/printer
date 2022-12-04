@@ -7,6 +7,7 @@ use App\Models\Kelas;
 use App\Models\Printer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Throwable;
 
 class PrinterController extends Controller
@@ -34,11 +35,13 @@ class PrinterController extends Controller
     }
     public function delete(Printer $printer)
     {
+        Gate::authorize("edit_delete", $printer);
         $printer->delete();
         return back()->with("sukses", "Berhasil Menghapus");
     }
     public function edit(Printer $printer)
     {
+        Gate::authorize("edit_delete", $printer);
         $kelas =  Kelas::all();
         return view("printer.edit", [
             "printer" => $printer,
@@ -47,6 +50,7 @@ class PrinterController extends Controller
     }
     public function update(Request $request, Printer $printer)
     {
+        Gate::authorize("edit_delete", $printer);
         $printer->update($request->input());
         return redirect()->to(route("home"))->with("sukses", "Berhasil di Perbarui");
     }

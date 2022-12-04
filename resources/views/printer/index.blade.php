@@ -102,9 +102,12 @@
                     <small class="text-dark">{{ $printer->created_at->diffForHumans()}}</small>
                 </td>
                 <td>
+@can("edit_delete",$printer)
                     <button class="btn btn-sm btn-danger btn-delete" data-id="{{ $printer->id}}">hapus</button>
 <a href="/edit/{{$printer->id}}" class="btn btn-sm btn-warning">Edit</a>
-
+@else
+    -
+@endcan
                 </td>
             </tr>
 

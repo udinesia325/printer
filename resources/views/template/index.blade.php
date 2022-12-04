@@ -19,11 +19,17 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Beranda</a>
+            <a class="nav-link {{ Route::is("home")?"active":""}} " aria-current="page" href="/">Beranda</a>
+
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/logout">Logout</a>
           </li>
+          @can("admin_only")
+          <li class="nav-item">
+            <a class="nav-link {{ Route::is("register")?"active":""}} " aria-current="page" href="/register">Register</a>
+          </li>
+          @endcan
         </ul>
       </div>
   </nav>
