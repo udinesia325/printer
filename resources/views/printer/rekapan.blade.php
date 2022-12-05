@@ -18,6 +18,9 @@
     <input name="tahun" type="hidden" value="{{ request()->query('tahun')}}" />
     <input type="submit" value="Export Excel" class="btn btn-sm btn-success">
 </form>
+<?php
+$total = 0;
+?>
 @endif
 <div class="table-responsive">
     <table id="table" class="table table-striped" style="width:100%">
@@ -33,6 +36,7 @@
         </thead>
         <tbody>
             @forelse($printers as $printer)
+            <?php $total += $printer->biaya; ?>
             <tr>
                 <td>{{ $loop->iteration}}</td>
                 <td>{{ $printer->nama}}</td>
@@ -50,4 +54,22 @@
         </tbody>
     </table>
 </div>
+<h4>Total : Rp. {{ number_format($total,2)}}</h4>
 @endSection()
+@once
+@push("script")
+<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#table').DataTable({
+            language: {
+                url: "https://cdn.datatables.net/plug-ins/1.13.1/i18n/id.json"
+            }
+        });
+
+    });
+</script>
+@endpush
+@endonce

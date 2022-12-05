@@ -24,8 +24,21 @@
             <div class="invalid-feedback">@error('deskripsi'){{$message}}@enderror</div>
         </div>
         <div class="mb-3">
-            <input type="submit" class="form-control btn btn-success" value="Perbarui">
+            <input type="submit" class="btn btn-sm btn-success" value="Perbarui">
+            <a href="/" class="btn btn-sm btn-secondary">Kembali</a>
         </div>
 </form>
 </form>
 @endsection
+@once
+@push("script")
+<script>
+    document.querySelectorAll(".btn").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            e.target.innerHTML = "Memuat ..."
+            e.target.value = "Memuat ..."
+        })
+    })
+</script>
+@endpush
+@endonce

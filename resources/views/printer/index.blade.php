@@ -103,7 +103,7 @@
                 </td>
                 <td>
 @can("edit_delete",$printer)
-                    <button class="btn btn-sm btn-danger btn-delete mb-2" ><i class="fa-solid fa-trash-can" data-id="{{ $printer->id}}"  ></i></button>
+                    <button class="btn btn-sm btn-danger btn-delete mb-2" data-id="{{ $printer->id }}" ><i class="fa-solid fa-trash-can" data-id="{{ $printer->id}}"  ></i></button>
 <a href="/edit/{{$printer->id}}" class="btn btn-sm btn-warning text-white"><i class="fa-solid fa-file-pen"></i></a>
 @else
     -
@@ -138,12 +138,12 @@
         @if($errors->any())
         createModal.show()
         @endif
-    });
     $(".btn-delete").click((e) => {
-        const id = $(e.target).data("id")
+        const id = e.target.dataset.id
         $(".form-delete").attr("action", "/" + id)
         deleteModal.show()
     })
+    });
 </script>
 @endpush
 @endonce
