@@ -29,7 +29,7 @@
         @endforeach
         <tr>
             <td colspan="5"></td>
-            <td colspan="2">Total : Rp. {{ number_format($printer->biaya,2)}}</td>
+            <td colspan="2">Total : Rp. {{ number_format($total,2)}}</td>
         </tr>
     </tbody>
 </table>

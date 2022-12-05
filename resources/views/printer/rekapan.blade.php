@@ -11,6 +11,9 @@
     <input type="submit" value="terapkan" class="btn btn-sm btn-primary col-4" />
 </form>
 
+<?php
+$total = 0;
+?>
 @if(count($printers) > 0 )
 <form method="POST" action="{{ route('rekapan.excel') }}" class="m-2">
     @csrf
@@ -18,9 +21,6 @@
     <input name="tahun" type="hidden" value="{{ request()->query('tahun')}}" />
     <input type="submit" value="Export Excel" class="btn btn-sm btn-success">
 </form>
-<?php
-$total = 0;
-?>
 @endif
 <div class="table-responsive">
     <table id="table" class="table table-striped" style="width:100%">
@@ -35,7 +35,7 @@ $total = 0;
             </tr>
         </thead>
         <tbody>
-            @forelse($printers as $printer)
+            @foreach($printers as $printer)
             <?php $total += $printer->biaya; ?>
             <tr>
                 <td>{{ $loop->iteration}}</td>
@@ -43,14 +43,9 @@ $total = 0;
                 <td>{{ $printer->kelas}}</td>
                 <td>Rp. {{ number_format($printer->biaya,2)}}</td>
                 <td>{{ $printer->user->username}}</td>
-                <td>{{ $printer->created_at}}
-                </td>
+                <td>{{ $printer->created_at}}</td>
             </tr>
-            @empty
-            <tr>
-                <td colspan="6" class="text-center">Tidak ada data</td>
-            </tr>
-            @endforelse
+            @endforeach
         </tbody>
     </table>
 </div>

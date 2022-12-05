@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class RekapBulananExport implements FromView
 {
-    private $totalBiaya = 0;
     private $bulan;
     private $tahun;
     public function __construct($bulan, $tahun)
@@ -21,14 +20,15 @@ class RekapBulananExport implements FromView
         $printers =  Printer::whereMonth('created_at', $this->bulan)
             ->whereYear('created_at', $this->tahun)
             ->get();
+        $totalBiaya = 0;
         foreach ($printers as $printer) {
-            $this->totalBiaya += $printer->biaya;
+            $totalBiaya += $printer->biaya;
         }
         return view("printer.excel", [
             "printers" => $printers,
             "bulan" => $this->bulan,
             "tahun" => $this->tahun,
-            "total" => $this->totalBiaya
+            "total" => $totalBiaya
         ]);
     }
 }

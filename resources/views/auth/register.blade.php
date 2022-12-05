@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <input type="submit" class="form-control btn btn-primary" placeholder="password" value="Login">
+                    <input type="submit" class="form-control btn btn-primary" placeholder="password" value="Register">
                 </div>
             </form>
         </div>
